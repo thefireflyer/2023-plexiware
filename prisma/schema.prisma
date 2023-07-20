@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      Int    @id @default(autoincrement())
+  address String @unique
+
+  email        String @unique
+  passwordHash String
+
+  name String?
+
+  notes    Note[]
+  sessions Session[]
+  events   Event[]
+
+  @@index([address(sort: Asc), email(sort: Asc)])
+}
+
+model Session {
+  id        Int    @id @default(autoincrement())
+  authToken String
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  expirationDate DateTime
+
+  notesPermission    Boolean
+  photosPermission   Boolean
+  contactsPermission Boolean
+  filesPermission    Boolean
+  rootPermission     Boolean
+
+  deviceOS String
+  appName  String
+}
+
+model Note {
+  id       Int     @id @default(autoincrement())
+  title    String
+  content  String?
+  public   Boolean @default(false)
+  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId Int
+}
+
+model Event {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String?
+
+  start DateTime
+  end   DateTime
+
+  public   Boolean @default(false)
+  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId Int
+}
