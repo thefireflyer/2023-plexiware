@@ -13,17 +13,21 @@ export const load = (async ({ cookies }) => {
                 id: session.userId
             },
             include: {
-                sessions: true
+                sessions: true,
+                themes: true
             }
         })
 
 
         return {
+            currentTheme: session.theme,
             sessionid: session.id,
             address: user?.address,
             email: user?.email,
             name: user?.name,
-            sessions: user?.sessions
+            sessions: user?.sessions,
+            themes: user?.themes,
+            profilePicture: user?.profilePictureId
         }
     })
 
@@ -52,6 +56,7 @@ export const actions = {
                 }
 
                 else {
+                    console.log("invalid cred")
                     return {
                         success: false
                     }
@@ -60,6 +65,7 @@ export const actions = {
             })
         }
         else {
+            console.log("invalid login")
             return {
                 success: false
             }
@@ -196,4 +202,21 @@ export const actions = {
             return {}
         })
     },
+    removepfp: async ({ request, cookies }) => {
+
+        return await WithSession(cookies, async (db: PrismaClient, session: Session) => {
+
+            const res = await db.user.update({
+                where: {
+                    id: session.userId
+                },
+                data: {
+                    profilePictureId: null
+                }
+            })
+
+
+            return { success: true }
+        })
+    }
 };

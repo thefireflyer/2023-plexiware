@@ -6,7 +6,7 @@
 	bg-neutral-100 dark:bg-neutral-900
 	dark:text-white
 	h-full w-full
-	flex flex-col md:flex-row">
+	flex flex-col md:flex-row overflow-y-scroll">
 	<slot />
 </main>
 

@@ -150,7 +150,7 @@
 	>
 		{#each recentNotes as note}
 			<a
-				href="account/notes/{note.url}"
+				href="/account/notes/{note.url}"
 				class="
             flex flex-row gap-3
             items-center

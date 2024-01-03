@@ -12,14 +12,13 @@
 
 	let menuOpen = false;
 
-	let searchQuery = data.url.searchParams.get('q') ?? '';
-	
+	console.log(data);
 
+	let searchQuery = data.url.searchParams.get('q') ?? '';
 
 	navigating.subscribe((nav) => {
 		// console.log(data.url)
 		console.log('navigating to:', data.url.searchParams);
-
 	});
 
 	let os = 'unknown';
@@ -64,11 +63,10 @@
 			url: '',
 			name: 'Account',
 			icon: 'account_circle'
-		},
-	]
+		}
+	];
 
-    const linksAbout = [
-
+	const linksAbout = [
 		{
 			url: '/docs',
 			name: 'Documentation',
@@ -84,21 +82,18 @@
 			name: 'Other apps',
 			icon: 'apps'
 		}
-    ]
-
-
+	];
 </script>
 
-{#if $page.data.sessionid}
+{#if data.sessionid}
 	<div
 		class="bg-ctp-crust
 grow flex flex-col
 justify-center
-items-stretch
-relative"
+items-stretch relative maincontainer"
 	>
 		<header
-			class="h-12 p-2 pb-0 w-full
+			class="h-14 p-2 w-full
     flex flex-row justify-between
     gap-1 md:gap-3"
 		>
@@ -167,14 +162,15 @@ relative"
 					<div
 						class="absolute top-0 left-0 w-full h-fit
                     z-10 bg-ctp-mantle rounded-2xl
-                    flex flex-col overflow-hidden"
+                    flex flex-col overflow-hidden search-results"
 					>
 						<div class="w-full h-10" />
 						{#each data.searchResults as item}
 							<a
 								href={item.slug}
-								class="w-full h-10 flex px-3 hover:bg-neutral-300 dark:hover:bg-neutral-700 items-center"
+								class="w-full h-10 flex px-3 hover:bg-neutral-300 dark:hover:bg-neutral-700 items-center gap-2"
 							>
+								<span class="material-icons-outlined text-xl"> {item.icon} </span>
 								<span class="text-lg">{item.name}</span>
 							</a>
 						{/each}
@@ -231,12 +227,12 @@ relative"
         absolute top-0 right-0
         flex bg-ctp-crust
         rounded-l-3xl z-50
-        flex flex-col p-3 gap-2"
+        flex flex-col p-3 gap-2 menu"
 			>
 				{#each links as link}
 					<a
 						href="/account{link.url}"
-						class="{("/account"+link.url) == data.url.pathname ? "bg-ctp-red" : ""}
+						class="{'/account' + link.url == data.url.pathname ? 'bg-ctp-red' : ''}
     borde rounded-full border-neutral-500 hover:bg-neutral-200 hover:dark:bg-neutral-800
     p-1 px-2 flex items-stretch gap-2"
 					>
@@ -244,9 +240,9 @@ relative"
 						<span class="text-2xl">{link.name}</span>
 					</a>
 				{/each}
-                <div class="px-3 p-1">
-                    <div class="h-px bg-neutral-500"></div>
-                </div>
+				<div class="px-3 p-1">
+					<div class="h-px bg-neutral-500" />
+				</div>
 				{#each linksAbout as link}
 					<a
 						href={link.url}
@@ -264,7 +260,7 @@ relative"
 		<div class="h-1 bg-ctp-red w-full absolute bottom-0 left-0" />
 	</div>
 {:else}
-	<div
+	<!-- <div
 		class="grow p-3
 flex flex-col
 items-center gap-3"
@@ -280,7 +276,6 @@ items-center gap-3"
 
 			<a href="/" class="items-center material-icons-round text-2xl"> close </a>
 
-			<!-- <div class="w-4 h-4"></div> -->
 		</div>
 		<form
 			method="POST"
@@ -310,5 +305,109 @@ items-center gap-3"
 			<button class="border border-neutral-500 rounded-lg">Log in</button>
 			<button class="border border-neutral-500 rounded-lg" formaction="?/register">Register</button>
 		</form>
+	</div> -->
+
+	<div
+		class="grow p-3
+flex flex-col
+items-center gap-3"
+	>
+		<div class="md:grow" />
+		<div class="login rounded-2xl p-3">
+			<div class="card p-3">
+				<div class="flex items-center w-full gap-1">
+					<span class="items-center material-icons-round text-2xl"> account_circle </span>
+
+					<div class="grow" />
+
+					<h1 class="text-2xl">Account</h1>
+
+					<div class="grow" />
+
+					<a href="/" class="items-center material-icons-round text-2xl"> close </a>
+				</div>
+				<form
+					method="POST"
+					action="?/login"
+					class="text-lg
+    flex flex-col gap-3 items-stretch w-full md:w-56"
+					on:submit={() => {
+						os = window.navigator.platform || 'unknown';
+
+						console.log(os);
+					}}
+				>
+					<label>
+						Email
+						<input name="email" type="email" class="w-full dark:bg-black" />
+					</label>
+					<label>
+						Password
+						<input name="password" type="password" class="w-full dark:bg-black" />
+					</label>
+					<label>
+						Address
+						<input name="address" type="text" class="w-full dark:bg-black" />
+					</label>
+					<input type="hidden" name="os" id="os" value={os} />
+					<button class="border border-neutral-500 rounded-lg">Log in</button>
+					<button class="border border-neutral-500 rounded-lg" formaction="?/register"
+						>Register</button
+					>
+				</form>
+			</div>
+		</div>
+		<div class="md:grow" />
+		<div class="md:grow" />
 	</div>
 {/if}
+
+<style>
+
+	.maincontainer {
+
+		/* background-image: url('https://4.bp.blogspot.com/-HatqCYL4tsw/UIY_MhXK3mI/AAAAAAAAL-M/8YjrYY29i34/s1600/Abstract+Purple+Wallpapers+2.jpg');
+		background-position: center;
+		background-size: cover; */
+
+	}
+
+	.maincontainer header {
+		/* backdrop-filter: blur(16px) saturate(180%);
+		-webkit-backdrop-filter: blur(16px) saturate(180%);
+		background-color: rgba(17, 25, 40, 0.82);
+		border: 1px solid rgba(255, 255, 255, 0.125);
+		border-width: 0 0 1px 0; */
+
+	}
+
+	.maincontainer .search-results {
+		/* backdrop-filter: blur(16px) saturate(180%);
+		-webkit-backdrop-filter: blur(16px) saturate(180%);
+		background-color: rgba(17, 25, 40, 0.82);
+		border: 1px solid rgba(255, 255, 255, 0.125); */
+	}
+
+	.maincontainer .menu {
+		/* backdrop-filter: blur(16px) saturate(180%);
+		-webkit-backdrop-filter: blur(16px) saturate(180%);
+		background-color: rgba(17, 25, 40, 0.82);
+		border: 1px solid rgba(255, 255, 255, 0.125);
+		border-right-width: 0; */
+	}
+
+	.login {
+		background-image: url('https://4.bp.blogspot.com/-HatqCYL4tsw/UIY_MhXK3mI/AAAAAAAAL-M/8YjrYY29i34/s1600/Abstract+Purple+Wallpapers+2.jpg');
+		background-position: center;
+		background-size: cover;
+	}
+
+	/* Glassmorphism card effect */
+	.login .card {
+		backdrop-filter: blur(16px) saturate(180%);
+		-webkit-backdrop-filter: blur(16px) saturate(180%);
+		background-color: rgba(17, 25, 40, 0.82);
+		border-radius: 12px;
+		border: 1px solid rgba(255, 255, 255, 0.125);
+	}
+</style>

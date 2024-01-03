@@ -20,10 +20,13 @@ export const WithSession = async (cookies: Cookies, query: Query) => {
     if (sessionauth) {
 
         return await RunWithDatabase(async (db: PrismaClient) => {
-    
+            console.log(sessionid)
             const session = await db.session.findUnique({
                 where: {
                     id: sessionid
+                },
+                include: {
+                    theme: true
                 }
             })
 
@@ -31,7 +34,7 @@ export const WithSession = async (cookies: Cookies, query: Query) => {
                 return await query(db, session)
             }
             else {
-
+                console.log("invalid session")
                 cookies.delete('sessionid')
                 cookies.delete('sessionauth')
                 return {}
@@ -41,6 +44,7 @@ export const WithSession = async (cookies: Cookies, query: Query) => {
 
     }
     else {
+        console.log("unauth")
         return {}
     }
 
@@ -71,8 +75,12 @@ export const createUserSession = async (data: FormData, request: Request, cookie
         }
     })
 
-    cookies.set('sessionid', session.id.toString());
-    cookies.set('sessionauth', authToken);
+    await cookies.set('sessionid', session.id.toString(), {
+        secure: false
+    });
+    await cookies.set('sessionauth', authToken, {
+        secure: false
+    });
 
 
     return {
