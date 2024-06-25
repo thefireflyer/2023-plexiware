@@ -1,5 +1,5 @@
 .DS_Store
-prisma/dev.db
+/prisma/dev.db
 node_modules
 /build
 /.svelte-kit
