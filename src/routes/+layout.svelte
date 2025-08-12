@@ -1,17 +1,18 @@
 <script>
-	import "../app.css";
+	import '../app.css';
 </script>
 
-<main class="ctp-latte dark:ctp-mocha
+<main
+	class="ctp-latte dark:ctp-mocha
 	bg-neutral-100 dark:bg-neutral-900
 	dark:text-white
 	h-full w-full
-	flex flex-col md:flex-row overflow-y-scroll">
+	flex flex-col md:flex-row overflow-y-scroll"
+>
 	<slot />
 </main>
 
 <style>
-
 	:global(html, body) {
 		padding: 0;
 		margin: 0;
@@ -27,5 +28,4 @@
 	::-webkit-scrollbar {
 		display: none;
 	}
-
 </style>

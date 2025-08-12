@@ -35,8 +35,8 @@ export const WithSession = async (cookies: Cookies, query: Query) => {
             }
             else {
                 console.log("invalid session")
-                cookies.delete('sessionid')
-                cookies.delete('sessionauth')
+                cookies.delete('sessionid', {path: '/'})
+                cookies.delete('sessionauth', {path: '/'})
                 return {}
             }
 
@@ -76,10 +76,10 @@ export const createUserSession = async (data: FormData, request: Request, cookie
     })
 
     await cookies.set('sessionid', session.id.toString(), {
-        secure: false
+        secure: false, path: '/'
     });
     await cookies.set('sessionauth', authToken, {
-        secure: false
+        secure: false, path: '/'
     });
 
 

@@ -20,7 +20,7 @@ export const load = (async ({ cookies }) => {
 
 
         return {
-            currentTheme: session.theme,
+            currentTheme: session.themeId,
             sessionid: session.id,
             address: user?.address,
             email: user?.email,
@@ -157,8 +157,8 @@ export const actions = {
             })
 
 
-            cookies.delete('sessionid')
-            cookies.delete('sessionauth')
+            cookies.delete('sessionid', {path: '/'})
+            cookies.delete('sessionauth', {path: '/'})
 
             return {}
         })
@@ -174,8 +174,8 @@ export const actions = {
             })
 
 
-            cookies.delete('sessionid')
-            cookies.delete('sessionauth')
+            cookies.delete('sessionid', {path: '/'})
+            cookies.delete('sessionauth', {path: '/'})
 
             return {}
         })
@@ -194,8 +194,8 @@ export const actions = {
             })
 
             if (sessionid == session.id) {
-                cookies.delete('sessionid')
-                cookies.delete('sessionauth')
+                cookies.delete('sessionid', {path: '/'})
+                cookies.delete('sessionauth', {path: '/'})
             }
 
 

@@ -17,7 +17,7 @@
 - npm
 
 **Development:**
-- `npm install`
+- `npm run setup`
 - `npm run dev`
 
 **Deployment:**

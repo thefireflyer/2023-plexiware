@@ -363,13 +363,10 @@ items-center gap-3"
 {/if}
 
 <style>
-
 	.maincontainer {
-
 		/* background-image: url('https://4.bp.blogspot.com/-HatqCYL4tsw/UIY_MhXK3mI/AAAAAAAAL-M/8YjrYY29i34/s1600/Abstract+Purple+Wallpapers+2.jpg');
 		background-position: center;
 		background-size: cover; */
-
 	}
 
 	.maincontainer header {
@@ -378,7 +375,6 @@ items-center gap-3"
 		background-color: rgba(17, 25, 40, 0.82);
 		border: 1px solid rgba(255, 255, 255, 0.125);
 		border-width: 0 0 1px 0; */
-
 	}
 
 	.maincontainer .search-results {

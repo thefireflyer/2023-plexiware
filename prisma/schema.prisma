@@ -1,173 +1,121 @@
-///////////////////////////////////////////////////////////////////////////////
-
 generator client {
   provider = "prisma-client-js"
 }
-
-//---------------------------------------------------------------------------//
 
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
-///////////////////////////////////////////////////////////////////////////////
-
 model User {
-  id      Int    @id @default(autoincrement())
-  address String @unique
+  id               Int       @id @default(autoincrement())
+  address          String    @unique
+  email            String    @unique
+  passwordHash     String
+  name             String?
+  profilePictureId Int?      @unique
+  events           Event[]
+  files            File[]
+  fileTags         FileTag[]
+  folders          Folder[]
+  notes            Note[]
+  sessions         Session[]
+  themes           Theme[]
+  profilePicture   File?     @relation("pfp", fields: [profilePictureId], references: [id])
 
-  email        String @unique
-  passwordHash String
-
-  name String?
-
-  profilePicture   File? @relation(name: "pfp", fields: [profilePictureId], references: [id])
-  profilePictureId Int?  @unique
-
-  notes    Note[]
-  sessions Session[]
-  events   Event[]
-  themes   Theme[]
-  files    File[]
-  fileTags FileTag[]
-  folders  Folder[]
-
-  @@index([address(sort: Asc), email(sort: Asc)])
+  @@index([address, email])
 }
 
-//---------------------------------------------------------------------------//
-
 model Session {
-  id        Int    @id @default(autoincrement())
-  authToken String
-
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
-
-  expirationDate DateTime
-
+  id                 Int      @id @default(autoincrement())
+  authToken          String
+  userId             Int
+  expirationDate     DateTime
   notesPermission    Boolean
   photosPermission   Boolean
   contactsPermission Boolean
   filesPermission    Boolean
   rootPermission     Boolean
-
-  deviceOS String
-  appName  String
-
-  theme   Theme? @relation(fields: [themeId], references: [id])
-  themeId Int?
+  deviceOS           String
+  appName            String
+  themeId            Int?
+  theme              Theme?   @relation(fields: [themeId], references: [id])
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 model Note {
-  id    Int    @id @default(autoincrement())
-  title String
-
-  content String?
-
-  public Boolean @default(false)
-
-  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  id       Int     @id @default(autoincrement())
+  title    String
+  content  String?
+  public   Boolean @default(false)
   authorId Int
+  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 model Event {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String
   description String?
-
-  start DateTime
-  end   DateTime
-
-  public   Boolean @default(false)
-  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId Int
+  start       DateTime
+  end         DateTime
+  public      Boolean  @default(false)
+  authorId    Int
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 model Theme {
-  id       Int    @id @default(autoincrement())
-  name     String
-  contents String
-
-  preview   File? @relation(fields: [previewId], references: [id])
+  id        Int       @id @default(autoincrement())
+  name      String
+  contents  String
   previewId Int?
-
-  sessions Session[]
-
-  public   Boolean @default(false)
-  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId Int
+  public    Boolean   @default(false)
+  authorId  Int
+  sessions  Session[]
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  preview   File?     @relation(fields: [previewId], references: [id])
 }
-
-///////////////////////////////////////////////////////////////////////////////
 
 model Folder {
-  id   Int    @id @default(autoincrement())
-  name String
-
-  parent   Folder? @relation("ParentFolder", fields: [parentId], references: [id], onDelete: Cascade)
-  parentId Int?
-
-  folders Folder[] @relation("ParentFolder")
-  files   File[]
-  size    BigInt
-
+  id               Int      @id @default(autoincrement())
+  name             String
+  parentId         Int?
+  size             BigInt
   dateCreated      DateTime
   dateLastModified DateTime
   dateLastAccessed DateTime
-
-  public   Boolean @default(false)
-  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId Int
+  public           Boolean  @default(false)
+  authorId         Int
+  files            File[]
+  author           User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  parent           Folder?  @relation("ParentFolder", fields: [parentId], references: [id], onDelete: Cascade)
+  folders          Folder[] @relation("ParentFolder")
 }
-
-//---------------------------------------------------------------------------//
 
 model File {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
-
+  id               Int       @id @default(autoincrement())
+  name             String
+  description      String?
   dateCreated      DateTime
   dateLastModified DateTime
   dateLastAccessed DateTime
-
-  content  Bytes
-  size     BigInt
-  preview  Bytes?
-  fileType String
-
-  tags FileTag[]
-
-  themes Theme[]
-
-  profilePicture User? @relation(name: "pfp")
-
-  Folder   Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
-  folderId Int?
-
-  public   Boolean @default(false)
-  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId Int
+  content          Bytes
+  size             BigInt
+  preview          Bytes?
+  fileType         String
+  folderId         Int?
+  public           Boolean   @default(false)
+  authorId         Int
+  author           User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  Folder           Folder?   @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  themes           Theme[]
+  profilePicture   User?     @relation("pfp")
+  tags             FileTag[] @relation("FileToFileTag")
 }
-
-//---------------------------------------------------------------------------//
 
 model FileTag {
-  id   Int    @id @default(autoincrement())
-  name String
-
-  files File[]
-
-  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  id       Int    @id @default(autoincrement())
+  name     String
   authorId Int
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  files    File[] @relation("FileToFileTag")
 }
-
-///////////////////////////////////////////////////////////////////////////////
