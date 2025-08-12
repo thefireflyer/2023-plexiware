@@ -1,14 +1,17 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+///////////////////////////////////////////////////////////////////////////////
 
 generator client {
   provider = "prisma-client-js"
 }
 
+//---------------------------------------------------------------------------//
+
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+///////////////////////////////////////////////////////////////////////////////
 
 model User {
   id      Int    @id @default(autoincrement())
@@ -33,6 +36,8 @@ model User {
   @@index([address(sort: Asc), email(sort: Asc)])
 }
 
+//---------------------------------------------------------------------------//
+
 model Session {
   id        Int    @id @default(autoincrement())
   authToken String
@@ -51,18 +56,25 @@ model Session {
   deviceOS String
   appName  String
 
-  theme Theme? @relation(fields: [themeId], references: [id])
+  theme   Theme? @relation(fields: [themeId], references: [id])
   themeId Int?
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
 model Note {
-  id       Int     @id @default(autoincrement())
-  title    String
-  content  String?
-  public   Boolean @default(false)
-  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  id    Int    @id @default(autoincrement())
+  title String
+
+  content String?
+
+  public Boolean @default(false)
+
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId Int
 }
+
+///////////////////////////////////////////////////////////////////////////////
 
 model Event {
   id          Int     @id @default(autoincrement())
@@ -77,6 +89,8 @@ model Event {
   authorId Int
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
 model Theme {
   id       Int    @id @default(autoincrement())
   name     String
@@ -85,12 +99,14 @@ model Theme {
   preview   File? @relation(fields: [previewId], references: [id])
   previewId Int?
 
-  sessions  Session[]
+  sessions Session[]
 
-  public   Boolean   @default(false)
-  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  public   Boolean @default(false)
+  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId Int
 }
+
+///////////////////////////////////////////////////////////////////////////////
 
 model Folder {
   id   Int    @id @default(autoincrement())
@@ -111,6 +127,8 @@ model Folder {
   author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId Int
 }
+
+//---------------------------------------------------------------------------//
 
 model File {
   id          Int     @id @default(autoincrement())
@@ -140,6 +158,8 @@ model File {
   authorId Int
 }
 
+//---------------------------------------------------------------------------//
+
 model FileTag {
   id   Int    @id @default(autoincrement())
   name String
@@ -149,3 +169,5 @@ model FileTag {
   author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId Int
 }
+
+///////////////////////////////////////////////////////////////////////////////
