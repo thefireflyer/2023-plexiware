@@ -23,15 +23,15 @@ border-2 border-neutral-800"
 				<span class="text-lg material-icons"> arrow_back_ios_new </span>
 			</a>
 			<h1 class="text-2xl">{data.file.name}</h1>
-			<div class="grow" />
+			<div class="grow"></div>
 		</div>
 		<div class="grow flex overflow-y-scroll gap-2 flex-col">
-			{#if data.file.fileType.includes("svg")}
-			<iframe src="/account/files/file/{data.file.id}/get/content" title="description"></iframe> 
-			{:else if data.file.fileType.includes("image")}
-			<img src="/account/files/file/{data.file.id}/get/content" alt="img" />
+			{#if data.file.fileType.includes('svg')}
+				<iframe src="/account/files/file/{data.file.id}/get/content" title="description"></iframe>
+			{:else if data.file.fileType.includes('image')}
+				<img src="/account/files/file/{data.file.id}/get/content" alt="img" />
 			{:else}
-			<iframe src="/account/files/file/{data.file.id}/get/content" title="description"></iframe> 
+				<iframe src="/account/files/file/{data.file.id}/get/content" title="description"></iframe>
 			{/if}
 			<h2 class="text-lg text-neutral-700 dark:text-neutral-300">{data.file.description}</h2>
 			<h2 class="text-lg text-neutral-700 dark:text-neutral-300">
@@ -43,12 +43,18 @@ border-2 border-neutral-800"
 			<h2 class="text-lg text-neutral-700 dark:text-neutral-300">
 				Last accessed: {data.file.dateLastAccessed}
 			</h2>
-			{#if data.file.size>BigInt(1000**3)}
-			<h2 class="text-lg text-neutral-700 dark:text-neutral-300">Size: {parseFloat(data.file.size)/1000.0**3} GB</h2>
-			{:else if data.file.size>BigInt(1000**2)}
-			<h2 class="text-lg text-neutral-700 dark:text-neutral-300">Size: {parseFloat(data.file.size)/1000.0**2} MB</h2>
+			{#if data.file.size > BigInt(1000 ** 3)}
+				<h2 class="text-lg text-neutral-700 dark:text-neutral-300">
+					Size: {parseFloat(data.file.size) / 1000.0 ** 3} GB
+				</h2>
+			{:else if data.file.size > BigInt(1000 ** 2)}
+				<h2 class="text-lg text-neutral-700 dark:text-neutral-300">
+					Size: {parseFloat(data.file.size) / 1000.0 ** 2} MB
+				</h2>
 			{:else}
-			<h2 class="text-lg text-neutral-700 dark:text-neutral-300">Size: {parseFloat(data.file.size)/1000.0} kB</h2>
+				<h2 class="text-lg text-neutral-700 dark:text-neutral-300">
+					Size: {parseFloat(data.file.size) / 1000.0} kB
+				</h2>
 			{/if}
 
 			<form
@@ -90,26 +96,28 @@ rounded-lg
     bg-ctp-red dark:text-black
     rounded-full">Update</button
 				>
-				<a href="/account/files/file/{data.file.id}/get/content" download="{data.file.name}"
+				<a
+					href="/account/files/file/{data.file.id}/get/content"
+					download={data.file.name}
 					class="
     p-2 px-4
     bg-ctp-mauve dark:text-black
     rounded-full text-center">Download</a
 				>
-                <button
-                    formaction="../?/pfp"
-                    class="
+				<button
+					formaction="../?/pfp"
+					class="
             p-2 px-4
             bg-ctp-green dark:text-black
             rounded-full">Set as profile picture</button
-                >
-                <button
-                    formaction="../?/delete"
-                    class="
+				>
+				<button
+					formaction="../?/delete"
+					class="
             p-2 px-4
             bg-ctp-pink dark:text-black
             rounded-full">Delete</button
-                >
+				>
 			</form>
 		</div>
 	</div>

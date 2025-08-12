@@ -15,8 +15,9 @@ export const GET: RequestHandler = async ({ params, cookies }) => {
                     id
                 }
             })
-
-            return new Response(file.preview ?? file.content)
+            if (file) {
+                return new Response(file.preview ?? file.content)
+            } else { return new Response() }
         })
     } else { return new Response() }
 };

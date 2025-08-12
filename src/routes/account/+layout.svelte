@@ -108,7 +108,7 @@ items-stretch relative maincontainer"
 			<a href="/" class="flex items-center hidden md:block">
 				<span class="material-icons-round text-3xl"> language </span>
 			</a>
-			<div class="md:grow" />
+			<div class="md:grow"></div>
 			<div class="grow flex relative">
 				<form
 					action=""
@@ -164,7 +164,7 @@ items-stretch relative maincontainer"
                     z-10 bg-ctp-mantle rounded-2xl
                     flex flex-col overflow-hidden search-results"
 					>
-						<div class="w-full h-10" />
+						<div class="w-full h-10"></div>
 						{#each data.searchResults as item}
 							<a
 								href={item.slug}
@@ -178,7 +178,7 @@ items-stretch relative maincontainer"
 				{/if}
 			</div>
 
-			<div class="md:grow" />
+			<div class="md:grow"></div>
 
 			<!-- <a href="/account" class="flex items-center hidden md:block">
 				<span class="material-icons-round text-3xl"> account_circle </span>
@@ -208,7 +208,7 @@ items-stretch relative maincontainer"
 				}}
 				class="absolute w-full h-full top-0 left-0 rounded z-40"
 				style="background-color: rgba(0,0,0,0.5);"
-			/>
+			></div>
 
 			<div
 				in:fly={{
@@ -241,7 +241,7 @@ items-stretch relative maincontainer"
 					</a>
 				{/each}
 				<div class="px-3 p-1">
-					<div class="h-px bg-neutral-500" />
+					<div class="h-px bg-neutral-500"></div>
 				</div>
 				{#each linksAbout as link}
 					<a
@@ -257,7 +257,7 @@ items-stretch relative maincontainer"
 			</div>
 		{/if}
 
-		<div class="h-1 bg-ctp-red w-full absolute bottom-0 left-0" />
+		<div class="h-1 bg-ctp-red w-full absolute bottom-0 left-0"></div>
 	</div>
 {:else}
 	<!-- <div
@@ -312,17 +312,17 @@ items-center gap-3"
 flex flex-col
 items-center gap-3"
 	>
-		<div class="md:grow" />
+		<div class="md:grow"></div>
 		<div class="login rounded-2xl p-3">
 			<div class="card p-3">
 				<div class="flex items-center w-full gap-1">
 					<span class="items-center material-icons-round text-2xl"> account_circle </span>
 
-					<div class="grow" />
+					<div class="grow"></div>
 
 					<h1 class="text-2xl">Account</h1>
 
-					<div class="grow" />
+					<div class="grow"></div>
 
 					<a href="/" class="items-center material-icons-round text-2xl"> close </a>
 				</div>
@@ -357,40 +357,40 @@ items-center gap-3"
 				</form>
 			</div>
 		</div>
-		<div class="md:grow" />
-		<div class="md:grow" />
+		<div class="md:grow"></div>
+		<div class="md:grow"></div>
 	</div>
 {/if}
 
 <style>
-	.maincontainer {
-		/* background-image: url('https://4.bp.blogspot.com/-HatqCYL4tsw/UIY_MhXK3mI/AAAAAAAAL-M/8YjrYY29i34/s1600/Abstract+Purple+Wallpapers+2.jpg');
+	/* .maincontainer {
+		background-image: url('https://4.bp.blogspot.com/-HatqCYL4tsw/UIY_MhXK3mI/AAAAAAAAL-M/8YjrYY29i34/s1600/Abstract+Purple+Wallpapers+2.jpg');
 		background-position: center;
-		background-size: cover; */
+		background-size: cover;
 	}
 
 	.maincontainer header {
-		/* backdrop-filter: blur(16px) saturate(180%);
+		backdrop-filter: blur(16px) saturate(180%);
 		-webkit-backdrop-filter: blur(16px) saturate(180%);
 		background-color: rgba(17, 25, 40, 0.82);
 		border: 1px solid rgba(255, 255, 255, 0.125);
-		border-width: 0 0 1px 0; */
+		border-width: 0 0 1px 0;
 	}
 
 	.maincontainer .search-results {
-		/* backdrop-filter: blur(16px) saturate(180%);
-		-webkit-backdrop-filter: blur(16px) saturate(180%);
-		background-color: rgba(17, 25, 40, 0.82);
-		border: 1px solid rgba(255, 255, 255, 0.125); */
-	}
-
-	.maincontainer .menu {
-		/* backdrop-filter: blur(16px) saturate(180%);
+		backdrop-filter: blur(16px) saturate(180%);
 		-webkit-backdrop-filter: blur(16px) saturate(180%);
 		background-color: rgba(17, 25, 40, 0.82);
 		border: 1px solid rgba(255, 255, 255, 0.125);
-		border-right-width: 0; */
 	}
+
+	.maincontainer .menu {
+		backdrop-filter: blur(16px) saturate(180%);
+		-webkit-backdrop-filter: blur(16px) saturate(180%);
+		background-color: rgba(17, 25, 40, 0.82);
+		border: 1px solid rgba(255, 255, 255, 0.125);
+		border-right-width: 0;
+	} */
 
 	.login {
 		background-image: url('https://4.bp.blogspot.com/-HatqCYL4tsw/UIY_MhXK3mI/AAAAAAAAL-M/8YjrYY29i34/s1600/Abstract+Purple+Wallpapers+2.jpg');

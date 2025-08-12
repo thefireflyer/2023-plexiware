@@ -7,7 +7,7 @@
 	export let data: LayoutData;
 	console.log(data);
 
-	let interval: NodeJS.Timer | null | undefined = null;
+	let interval: NodeJS.Timeout | undefined;
 	let now = 0;
 
 	onMount(() => {
@@ -24,14 +24,14 @@
 </script>
 
 <div class="root">
-	<div class="menu-trigger" />
+	<div class="menu-trigger"></div>
 	<Window inner={data.state} />
 	<div class="timeline">
-		<div class="inner" />
-		<div class="now-ish" style="top: {now}%" />
-		<div class="now" style="top: {now}%" />
+		<div class="inner"></div>
+		<div class="now-ish" style="top: {now}%"></div>
+		<div class="now" style="top: {now}%"></div>
 		{#each data.events as event}
-			<div class="event" style="top: {event?.time}" />
+			<div class="event" style="top: {event}"></div>
 		{/each}
 	</div>
 </div>

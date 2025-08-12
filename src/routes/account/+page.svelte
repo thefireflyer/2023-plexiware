@@ -11,7 +11,7 @@ flex flex-col gap-3 overflow-y-scroll maincontainer"
 >
 	<div class="flex gap-2 items-center">
 		<h1 class="text-xl">Sessions</h1>
-		<div class="h-px bg-neutral-500 grow" />
+		<div class="h-px bg-neutral-500 grow"></div>
 	</div>
 
 	<div class="flex flex-col gap-1 p-3">
@@ -36,7 +36,7 @@ flex flex-col gap-3 overflow-y-scroll maincontainer"
 
 	<div class="flex gap-2 items-center">
 		<h1 class="text-xl">Profile picture</h1>
-		<div class="h-px bg-neutral-500 grow" />
+		<div class="h-px bg-neutral-500 grow"></div>
 	</div>
 
 	<div class="flex gap-3 flex-col">
@@ -55,14 +55,15 @@ flex flex-col gap-3 overflow-y-scroll maincontainer"
 				class="
         p-2 px-4
         bg-ctp-red dark:text-black
-        rounded-full" style="width: 128px;">Remove</button
+        rounded-full"
+				style="width: 128px;">Remove</button
 			>
 		</form>
 	</div>
 
 	<div class="flex gap-2 items-center">
 		<h1 class="text-xl">Themes</h1>
-		<div class="h-px bg-neutral-500 grow" />
+		<div class="h-px bg-neutral-500 grow"></div>
 	</div>
 
 	<div
@@ -105,7 +106,7 @@ flex justify-center items-center w-32 h-24"
 
 	<div class="flex gap-2 items-center">
 		<h1 class="text-xl">Account management</h1>
-		<div class="h-px bg-neutral-500 grow" />
+		<div class="h-px bg-neutral-500 grow"></div>
 	</div>
 
 	<form method="POST" action="?/edit" class="flex flex-col gap-4 p-3 text-lg">
@@ -143,7 +144,7 @@ flex justify-center items-center w-32 h-24"
 
 	<div class="flex gap-2 items-center">
 		<h1 class="text-xl text-ctp-red">Danger zone</h1>
-		<div class="h-px bg-neutral-500 grow" />
+		<div class="h-px bg-neutral-500 grow"></div>
 	</div>
 
 	<div class="flex flex-col gap-4">
@@ -151,7 +152,7 @@ flex justify-center items-center w-32 h-24"
 			method="POST"
 			action="?/delete"
 			on:submit={(event) => {
-				if (!window.confirm('Do you really want to delete your acocunt?')) {
+				if (!window.confirm('Do you really want to delete your account?')) {
 					event.preventDefault();
 				}
 			}}
@@ -177,14 +178,11 @@ flex justify-center items-center w-32 h-24"
 		border-radius: 100%;
 	}
 
-	.maincontainer {
-/* 
-		
+	/* .maincontainer {
 		backdrop-filter: blur(16px) saturate(180%);
 		-webkit-backdrop-filter: blur(16px) saturate(180%);
 		background-color: rgba(17, 25, 40, 0.952);
 		border: 1px solid rgba(255, 255, 255, 0.125);
-		border-width: 0 0 1px 0; */
-	}
-
+		border-width: 0 0 1px 0;
+	} */
 </style>

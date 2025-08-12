@@ -118,7 +118,7 @@ Journal                                                              1 Jan 2024
 {:else if inner.children[0]?.type === 'note'}
 	<div class="window">
 		<div class="inner">
-			<h1 contenteditable="true" bind:textContent={title} />
+			<h1 contenteditable="true" bind:textContent={title}></h1>
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div
 				contenteditable="true"
@@ -140,7 +140,7 @@ Journal                                                              1 Jan 2024
 				on:focusout={(ex) => {
 					console.log('out');
 				}}
-			/>
+			></div>
 			<!-- <div class="block">
 				<div class="block-toggle" />
 				<div class="block-text" contenteditable="true" bind:innerHTML={html}>Test</div>
@@ -148,10 +148,10 @@ Journal                                                              1 Jan 2024
 		</div>
 
 		<div class="minimap">
-			<div class="cursor" style="top: 0" />
+			<div class="cursor" style="top: 0"></div>
 		</div>
 	</div>
-{:else}<div />{/if}
+{:else}<div></div>{/if}
 
 <style>
 	.tile {
@@ -192,20 +192,12 @@ Journal                                                              1 Jan 2024
 		list-style-type: disc;
 	}
 
-	.window .inner .inner-html {
-	}
-
-	p {
+	/* p {
 		margin-top: 0.4em;
 		margin-bottom: 0.4em;
-	}
+	} */
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
+	h1 {
 		color: rgb(150, 150, 150);
 		font-family: 'Linux Biolinum';
 	}
@@ -216,10 +208,10 @@ Journal                                                              1 Jan 2024
 		margin: 1em 0 1em 0;
 	}
 
-	h2 {
+	/* h2 {
 		font-size: 1.5em;
 		margin: 0.75em 0 0.75em 0;
-	}
+	} */
 
 	.minimap {
 		position: absolute;

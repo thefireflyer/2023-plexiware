@@ -1,7 +1,5 @@
 <script lang="ts">
-    import type { PageData } from './$types';
-    
-    export let data: PageData;
+	import type { PageData } from './$types';
 </script>
 
 <div
@@ -23,11 +21,11 @@ border-2 border-neutral-800"
 				<span class="text-lg material-icons"> arrow_back_ios_new </span>
 			</a>
 			<h1 class="text-2xl">Create folder</h1>
-			<div class="grow" />
+			<div class="grow"></div>
 		</div>
 		<form
-		method="POST"
-        action=".?/group"
+			method="POST"
+			action=".?/group"
 			class="
     flex flex-col
     gap-5
@@ -49,9 +47,9 @@ border-2 border-neutral-800"
 				class="
         p-2 px-4
         bg-ctp-red dark:text-black
-        rounded-full"
-			>Confirm</button>
+        rounded-full">Confirm</button
+			>
 		</form>
 	</div>
-    <div class="grow" />
+	<div class="grow"></div>
 </div>

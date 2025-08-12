@@ -3,8 +3,6 @@
 	import { fade, fly } from 'svelte/transition';
 	import type { PageData } from '../routes/$types';
 
-	export let data: PageData;
-
 	let menuOpen = false;
 
 	let searchQuery = '';
@@ -85,7 +83,7 @@ gap-1 md:gap-3"
 		<a href="/" class="flex items-center hidden md:block">
 			<span class="material-icons-round text-3xl"> language </span>
 		</a>
-		<div class="md:grow" />
+		<div class="md:grow"></div>
 		<div class="grow flex relative">
 			<form
 				action=""
@@ -138,7 +136,7 @@ gap-1 md:gap-3"
 			</form>
 		</div>
 
-		<div class="md:grow" />
+		<div class="md:grow"></div>
 
 		<!-- <a href="/account" class="flex items-center hidden md:block">
     <span class="material-icons-round text-3xl"> account_circle </span>
@@ -153,7 +151,7 @@ gap-1 md:gap-3"
 		</button>
 	</header>
 
-	<div class="flex grow" />
+	<div class="flex grow"></div>
 
 	{#if menuOpen}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -168,7 +166,7 @@ gap-1 md:gap-3"
 			}}
 			class="absolute w-full h-full top-0 left-0 rounded z-40"
 			style="background-color: rgba(0,0,0,0.5);"
-		/>
+		></div>
 
 		<div
 			in:fly={{
@@ -201,7 +199,7 @@ gap-1 md:gap-3"
 				</a>
 			{/each}
 			<div class="px-3 p-1">
-				<div class="h-px bg-neutral-500" />
+				<div class="h-px bg-neutral-500"></div>
 			</div>
 			{#each linksAbout as link}
 				<a
@@ -217,7 +215,7 @@ gap-1 md:gap-3"
 		</div>
 	{/if}
 
-	<div class="h-1 bg-ctp-red w-full absolute bottom-0 left-0" />
+	<div class="h-1 bg-ctp-red w-full absolute bottom-0 left-0"></div>
 </div>
 
 <style>
@@ -233,21 +231,16 @@ gap-1 md:gap-3"
 
 	.container .searchbar {
 		height: var(--searchbar-height);
-        width: var(--searchbar-width);
-        border-radius: var(--searchbar-rounding);
-        padding: var(--searchbar-padding);
+		width: var(--searchbar-width);
+		border-radius: var(--searchbar-rounding);
+		padding: var(--searchbar-padding);
 	}
 
-	.container .icon {
+	/* .container .icon {
 		height: var(--icon-size);
 		width: var(--icon-size);
 		color: var(--icon-color);
 		background: var(--icon-bg);
-        border-radius: var(--icon-rounding);
-	}
-
-    .container .menu {
-        
-    }
-
+		border-radius: var(--icon-rounding);
+	} */
 </style>

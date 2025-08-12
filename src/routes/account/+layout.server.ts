@@ -149,7 +149,7 @@ export const load = (async ({ url, cookies }) => {
                     }
                 })
                 
-                if (user.profilePicture) {
+                if (user && user.profilePicture) {
                     
                     results.push({
                         name: user.profilePicture.name,

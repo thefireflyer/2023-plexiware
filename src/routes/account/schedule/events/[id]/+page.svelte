@@ -36,7 +36,7 @@ border-2 border-neutral-800"
 				<span class="text-lg material-icons"> arrow_back_ios_new </span>
 			</a>
 			<h1 class="text-2xl">{data.event.title}</h1>
-			<div class="grow" />
+			<div class="grow"></div>
 		</div>
 		<form
 			method="POST"
@@ -47,7 +47,7 @@ border-2 border-neutral-800"
     rounded-lg
     "
 		>
-		<input type="hidden" name="id" id="id" value={data.event.id}>
+			<input type="hidden" name="id" id="id" value={data.event.id} />
 			<input
 				type="text"
 				name="name"
@@ -108,5 +108,5 @@ border-2 border-neutral-800"
 			>
 		</form>
 	</div>
-	<div class="grow" />
+	<div class="grow"></div>
 </div>

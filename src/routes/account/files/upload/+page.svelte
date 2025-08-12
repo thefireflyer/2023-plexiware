@@ -4,8 +4,8 @@
 	export let data: PageData;
 	console.log(data);
 
-	let filelist: FileList | null | undefined
-	$: file = filelist?.item(0)
+	let filelist: FileList | null | undefined;
+	$: file = filelist?.item(0);
 </script>
 
 <div
@@ -27,22 +27,22 @@ border-2 border-neutral-800"
 				<span class="text-lg material-icons"> arrow_back_ios_new </span>
 			</a>
 			<h1 class="text-2xl">Upload file</h1>
-			<div class="grow" />
+			<div class="grow"></div>
 		</div>
 		<form
 			method="POST"
 			action=".?/create"
-            enctype="multipart/form-data"
+			enctype="multipart/form-data"
 			class="
     flex flex-col
     gap-5
     rounded-lg
     "
 		>
-		{#if file}
-		<!-- <img src={URL.createObjectURL(file)} alt="preview"> -->
-		<iframe src={URL.createObjectURL(file)} title="preview"></iframe>
-		{/if}
+			{#if file}
+				<!-- <img src={URL.createObjectURL(file)} alt="preview"> -->
+				<iframe src={URL.createObjectURL(file)} title="preview"></iframe>
+			{/if}
 			<input
 				type="text"
 				name="desc"
@@ -52,10 +52,16 @@ border-2 border-neutral-800"
         bg-ctp-mantle
         "
 			/>
-            
-            <input type="file" id="file" name="file" bind:files={filelist} on:change={() => {
-				console.log(filelist)
-			}}>
+
+			<input
+				type="file"
+				id="file"
+				name="file"
+				bind:files={filelist}
+				on:change={() => {
+					console.log(filelist);
+				}}
+			/>
 
 			<button
 				class="
@@ -65,12 +71,12 @@ border-2 border-neutral-800"
 			>
 		</form>
 	</div>
-	<div class="grow" />
+	<div class="grow"></div>
 </div>
 
 <style>
-	img {
+	/* img {
 		width: fit-content;
 		height: fit-content;
-	}
+	} */
 </style>

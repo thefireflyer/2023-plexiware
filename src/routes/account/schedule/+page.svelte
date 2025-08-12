@@ -11,17 +11,17 @@
 	let current = new Date();
 	$: formatted = current.toLocaleDateString();
 	$: morning = () => {
-		const res = new Date(current)
-		res.setHours(0)
-		res.setMinutes(0)
-		return res
-	}
+		const res = new Date(current);
+		res.setHours(0);
+		res.setMinutes(0);
+		return res;
+	};
 	$: night = () => {
-		const res = new Date(current)
-		res.setHours(23)
-		res.setMinutes(59)
-		return res
-	}
+		const res = new Date(current);
+		res.setHours(23);
+		res.setMinutes(59);
+		return res;
+	};
 
 	let datePicker = new Date();
 	let datePickerOpen = false;
@@ -77,10 +77,20 @@
 			}) => {
 				return {
 					...event,
-					startPosition: getPositionStyle(event.start<morning()?0:event.start.getMinutes(), event.start<morning()?0:event.start.getHours()) + 'em',
+					startPosition:
+						getPositionStyle(
+							event.start < morning() ? 0 : event.start.getMinutes(),
+							event.start < morning() ? 0 : event.start.getHours()
+						) + 'em',
 					height:
-						getPositionStyle(event.end>night()?59:event.end.getMinutes(), event.end>night()?23:event.end.getHours()) -
-						getPositionStyle(event.start<morning()?0:event.start.getMinutes(), event.start<morning()?0:event.start.getHours()) +
+						getPositionStyle(
+							event.end > night() ? 59 : event.end.getMinutes(),
+							event.end > night() ? 23 : event.end.getHours()
+						) -
+						getPositionStyle(
+							event.start < morning() ? 0 : event.start.getMinutes(),
+							event.start < morning() ? 0 : event.start.getHours()
+						) +
 						'em'
 				};
 			}
@@ -200,7 +210,7 @@ overflow-y-scroll"
 			>
 		</button>
 
-		<div class="grow" />
+		<div class="grow"></div>
 
 		<a
 			href="schedule/create"
@@ -255,8 +265,8 @@ overflow-y-scroll"
             {time.getMonth() == datePicker.getMonth() && time.getDate() == date
 						? 'bg-ctp-pink dark:text-black'
 						: current.getMonth() == datePicker.getMonth() && current.getDate() == date
-						? 'bg-neutral-200 dark:bg-neutral-800'
-						: ''}"
+							? 'bg-neutral-200 dark:bg-neutral-800'
+							: ''}"
 				>
 					{date}
 				</button>
@@ -306,7 +316,7 @@ overflow-y-scroll"
         grow
         flex flex-col h-6
         gap-3"
-			/>
+			></div>
 			{#each hours as hour}
 				{#each hour as segment}
 					<div
@@ -320,7 +330,7 @@ overflow-y-scroll"
 						<div
 							class="
                     border-b border-neutral-800"
-						/>
+						></div>
 					</div>
 				{/each}
 			{/each}
@@ -329,7 +339,7 @@ overflow-y-scroll"
         grow
         flex flex-col h-6
         gap-3"
-			/>
+			></div>
 			{#each calendarEvents as event}
 				{#if event.start < night() && event.end > morning()}
 					<a
@@ -361,7 +371,7 @@ overflow-y-scroll"
 					class="
 	h-px
 	bg-ctp-pink"
-				/>
+				></div>
 			</div>
 		{/if}
 	</div>

@@ -26,7 +26,7 @@ border-2 border-neutral-800"
 				<span class="text-lg material-icons"> arrow_back_ios_new </span>
 			</a>
 			<h1 class="text-2xl">{data.folder.name}</h1>
-			<div class="grow" />
+			<div class="grow"></div>
 		</div>
 
 		<div
@@ -61,7 +61,9 @@ rounded-lg
 flex justify-center items-center w-32 h-24 preview"
 					style="background-image: url(/account/files/file/{file.id}/get/preview);"
 				>
-					<span class="material-icons-outlined"> {file.fileType.includes("image") ? "image" : "description"} </span>
+					<span class="material-icons-outlined">
+						{file.fileType.includes('image') ? 'image' : 'description'}
+					</span>
 				</a>
 			{/each}
 
@@ -145,7 +147,7 @@ flex justify-center items-center w-32 h-24"
 			>
 		</form>
 	</div>
-	<div class="grow" />
+	<div class="grow"></div>
 </div>
 
 <style>
