@@ -1,26 +1,25 @@
-import { WithSession } from '$lib/user';
+import { withSession } from '$lib/api/user';
 import type { PrismaClient, Session } from '@prisma/client';
 import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
+import db from '$lib/db/db';
 
 export const load = (async ({ params, request, cookies }) => {
-    const id = parseInt(params.parent)
-    console.log(id)
+	const id = parseInt(params.parent);
+	console.log(id);
 
-    return await WithSession(cookies, async (db: PrismaClient, session: Session) => {
+	return await withSession(cookies, async (session: Session) => {
+		const parent = await db.folder.findUnique({
+			where: {
+				id
+			}
+		});
 
-        const parent = await db.folder.findUnique({
-            where: {
-                id
-            }
-        })
+		console.log(parent);
 
-        console.log(parent)
-
-        return {
-            sessionid: session.id,
-            parent
-        }
-    })
-
+		return {
+			sessionid: session.id,
+			parent
+		};
+	});
 }) satisfies PageServerLoad;

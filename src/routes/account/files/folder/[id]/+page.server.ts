@@ -1,178 +1,161 @@
-import { WithSession } from '$lib/user';
+import { withSession } from '$lib/api/user';
 import type { PrismaClient, Session } from '@prisma/client';
 import type { PageServerLoad } from './$types';
+import db from '$lib/db/db';
 
 export const load = (async ({ params, cookies }) => {
-    const id = parseInt(params.id)
+	const id = parseInt(params.id);
 
-    return await WithSession(cookies, async (db: PrismaClient, session: Session) => {
+	return await withSession(cookies, async (session: Session) => {
+		const folder = await db.folder.update({
+			where: {
+				id
+			},
+			data: {
+				dateLastAccessed: new Date()
+			},
+			select: {
+				id: true,
+				name: true,
+				dateCreated: true,
+				dateLastModified: true,
+				dateLastAccessed: true,
+				size: true,
+				files: {
+					select: {
+						id: true,
+						name: true,
+						dateCreated: true,
+						dateLastModified: true,
+						dateLastAccessed: true,
+						size: true,
+						fileType: true,
+						description: true
+					}
+				},
+				folders: true,
+				parentId: true
+			}
+		});
 
-
-        const folder = await db.folder.update({
-            where: {
-                id
-            },
-            data: {
-                dateLastAccessed: new Date()
-            },
-            select: {
-                id: true,
-                name: true,
-                dateCreated: true,
-                dateLastModified: true,
-                dateLastAccessed: true,
-                size: true,
-                files: {
-                    select: {
-                        id: true,
-                        name: true,
-                        dateCreated: true,
-                        dateLastModified: true,
-                        dateLastAccessed: true,
-                        size: true,
-                        fileType: true,
-                        description: true
-                    }
-                },
-                folders: true,
-                parentId: true,
-            }
-        })
-
-        return {
-            sessionid: session.id,
-            folder
-        }
-    })
-
+		return {
+			sessionid: session.id,
+			folder
+		};
+	});
 }) satisfies PageServerLoad;
 
-
 export const actions = {
-    update: async ({ params, request, cookies }) => {
+	update: async ({ params, request, cookies }) => {
+		const data = await request.formData();
 
-        const data = await request.formData()
+		const id = data.get('id') as string;
 
-        const id = data.get('id') as string
+		const name = data.get('name') as string | null;
+		const description = data.get('desc') as string | null;
 
+		if (id && name) {
+			return await withSession(cookies, async (session: Session) => {
+				const file = await db.file.update({
+					where: {
+						id: parseInt(id)
+					},
+					data: {
+						name,
+						description,
+						dateLastModified: new Date()
+					}
+				});
 
-        const name = data.get('name') as string | null
-        const description = data.get('desc') as string | null
+				console.log(file);
 
+				return {
+					sessionid: session.id
+				};
+			});
+		} else {
+			console.log('invalid form event create');
+		}
+	},
+	delete: async ({ request, cookies }) => {
+		const data = await request.formData();
 
-        if (id && name) {
+		const id = data.get('id') as string;
 
-            return await WithSession(cookies, async (db: PrismaClient, session: Session) => {
+		if (id) {
+			return await withSession(cookies, async (session: Session) => {
+				const file = await db.file.delete({
+					where: {
+						id: parseInt(id)
+					}
+				});
 
-                const file = await db.file.update({
-                    where: {
-                        id: parseInt(id)
-                    },
-                    data: {
-                        name,
-                        description,
-                        dateLastModified: new Date()
-                    }
-                })
+				console.log(file);
 
-                console.log(file)
+				return { success: true };
+			});
+		} else {
+			console.log('invalid input');
+		}
+	},
+	create: async ({ params, request, cookies }) => {
+		console.log('attempting upload!');
 
-                return {
-                    sessionid: session.id
-                }
-            })
-        } else {
-            console.log("invalid form event create")
-        }
+		const folderId = parseInt(params.id);
+		const data = await request.formData();
 
-    },
-    delete: async ({ request, cookies }) => {
+		const description = data.get('desc') as string | null;
 
-        const data = await request.formData()
+		const file = data.get('file') as File;
 
-        const id = data.get('id') as string
+		console.log(file.name, file.type);
 
-        if (id) {
-            return await WithSession(cookies, async (db: PrismaClient, session: Session) => {
+		if (file) {
+			return await withSession(cookies, async (session: Session) => {
+				const now = new Date();
 
-                const file = await db.file.delete({
-                    where: {
-                        id: parseInt(id)
-                    }
-                })
+				const event = await db.file.create({
+					data: {
+						name: file.name,
+						description,
+						content: Buffer.from(await file.arrayBuffer()),
+						size: file.size,
+						fileType: file.type,
+						dateCreated: now,
+						dateLastModified: now,
+						dateLastAccessed: now,
+						folderId,
+						authorId: session.userId
+					}
+				});
 
-                console.log(file)
+				async function updateSizes(id: number) {
+					console.log('parent', id);
+					const folder = await db.folder.update({
+						where: {
+							id
+						},
+						data: {
+							size: {
+								increment: file.size
+							}
+						},
+						include: {
+							parent: true
+						}
+					});
+					if (folder.parentId != null) {
+						updateSizes(folder.parentId);
+					}
+				}
+				updateSizes(folderId);
 
-                return { success: true }
-            })
-        } else {
-            console.log("invalid input")
-        }
+				console.log(event);
 
-    },
-    create: async ({ params, request, cookies }) => {
-        console.log("attempting upload!")
-
-
-        const folderId = parseInt(params.id)
-        const data = await request.formData()
-
-        const description = data.get('desc') as string | null
-
-        const file = data.get('file') as File
-
-        console.log(file.name, file.type)
-
-        if (file) {
-
-            return await WithSession(cookies, async (db: PrismaClient, session: Session) => {
-
-                const now = new Date()
-
-                const event = await db.file.create({
-                    data: {
-                        name: file.name,
-                        description,
-                        content: Buffer.from(await file.arrayBuffer()),
-                        size: file.size,
-                        fileType: file.type,
-                        dateCreated: now,
-                        dateLastModified: now,
-                        dateLastAccessed: now,
-                        folderId,
-                        authorId: session.userId
-                    }
-                })
-
-
-                async function updateSizes(id: number) {
-                    console.log("parent", id)
-                    const folder = await db.folder.update({
-                        where: {
-                            id
-                        },
-                        data: {
-                            size: {
-                                increment: file.size,
-                            },
-                        },
-                        include: {
-                            parent: true
-                        }
-                    })
-                    if (folder.parentId != null) {
-                        updateSizes(folder.parentId)
-                    }
-                }
-                updateSizes(folderId)
-
-                console.log(event)
-
-                return { success: true }
-            })
-        } else {
-            console.log("invalid form event create")
-        }
-
-    },
-}
+				return { success: true };
+			});
+		} else {
+			console.log('invalid form event create');
+		}
+	}
+};

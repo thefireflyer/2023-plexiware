@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { quintInOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
-	import type { PageData } from '../routes/$types';
+	import type { PageData } from '../../routes/$types';
 
 	let menuOpen = false;
 

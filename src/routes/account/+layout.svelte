@@ -6,7 +6,7 @@
 
 	import { quintInOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
-	import Transition from '$lib/transition.svelte';
+	import Transition from '$lib/components/transition.svelte';
 	import { navigating } from '$app/stores';
 	import { goto } from '$app/navigation';
 

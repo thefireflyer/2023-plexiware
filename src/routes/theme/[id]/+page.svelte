@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ThemeDemo from '$lib/themeDemo.svelte';
+	import ThemeDemo from '$lib/components/themeDemo.svelte';
 	import type { PageData } from './$types';
 
 	let drawerWidth = 600;

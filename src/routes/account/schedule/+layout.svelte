@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Transition from '$lib/transition.svelte';
+	import Transition from '$lib/components/transition.svelte';
 
 	import { navigating } from '$app/stores';
 
@@ -24,18 +24,19 @@
 	});
 </script>
 
-<div class="grow p-4 pt-3
-flex flex-col gap-3 relative">
-    <Transition
-        url={pageUrl}
-        classes="
+<div
+	class="grow p-4 pt-3
+flex flex-col gap-3 relative"
+>
+	<Transition
+		url={pageUrl}
+		classes="
                 absolute top-0 left-0
                 w-full h-full
                 flex
                 overflow-hidden flex-col md:flex-row"
-        {animated}
-    >
-        <slot />
-    </Transition>
-    
+		{animated}
+	>
+		<slot />
+	</Transition>
 </div>

@@ -1,20 +1,18 @@
-import { WithSession } from '$lib/user';
+import { withSession } from '$lib/api/user';
 import type { PrismaClient, Session } from '@prisma/client';
 import type { PageServerLoad } from './$types';
+import db from '$lib/db/db';
 
 export const load = (async ({ cookies }) => {
-    return await WithSession(cookies, async (db: PrismaClient, session: Session) => {
+	return await withSession(cookies, async (session: Session) => {
+		const user = await db.user.findUnique({
+			where: {
+				id: session.userId
+			}
+		});
 
-        const user = await db.user.findUnique({
-            where: {
-                id: session.userId
-            }
-        })
-
-
-        return {
-            sessionid: session.id
-        }
-    })
-
+		return {
+			sessionid: session.id
+		};
+	});
 }) satisfies PageServerLoad;

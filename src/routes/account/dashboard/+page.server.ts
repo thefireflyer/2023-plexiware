@@ -1,60 +1,60 @@
-import { WithSession } from '$lib/user';
+import { withSession } from '$lib/api/user';
 import type { PrismaClient, Session } from '@prisma/client';
 import type { PageServerLoad } from './$types';
+import db from '$lib/db/db';
+import { id } from '$lib/utils';
 
 export const load = (async ({ cookies }) => {
-    return await WithSession(cookies, async (db: PrismaClient, session: Session) => {
+	return await withSession(cookies, async (session: Session) => {
+		const user = await db.user.findUnique({
+			where: {
+				id: session.userId
+			}
+		});
 
-        const user = await db.user.findUnique({
-            where: {
-                id: session.userId
-            }
-        })
+		const nextOrCurrentEvent = await db.event.findFirst({
+			where: {
+				authorId: session.userId,
+				end: {
+					gt: new Date()
+				}
+			},
+			orderBy: [
+				{
+					start: 'asc'
+				}
+			]
+		});
 
-        const nextOrCurrentEvent = await db.event.findFirst({
-            where: {
-                authorId: session.userId,
-                end: {
-                    gt: new Date()
-                }
-            },
-            orderBy: [
-                {
-                    start: "asc"
-                }
-            ]
-        })
-        
-        const morning = new Date()
-        morning.setHours(0)
-        morning.setMinutes(0)
-        
-        const night = new Date()
-        night.setHours(23)
-        night.setMinutes(59)
+		const morning = new Date();
+		morning.setHours(0);
+		morning.setMinutes(0);
 
-        const todaysEvents = await db.event.findMany({
-            where: {
-                authorId: session.userId,
-                start: {
-                    lte: night
-                }, end: {
-                    gte: morning
-                }
-            },
-            orderBy: {
-                start: "asc"
-            }
-        })
+		const night = new Date();
+		night.setHours(23);
+		night.setMinutes(59);
 
-        console.log(nextOrCurrentEvent)
+		const todaysEvents = await db.event.findMany({
+			where: {
+				authorId: session.userId,
+				start: {
+					lte: night
+				},
+				end: {
+					gte: morning
+				}
+			},
+			orderBy: {
+				start: 'asc'
+			}
+		});
 
+		console.log(nextOrCurrentEvent);
 
-        return {
-            sessionid: session.id,
-            nextOrCurrentEvent,
-            todaysEvents
-        }
-    })
-
+		return {
+			sessionid: session.id,
+			nextOrCurrentEvent,
+			todaysEvents
+		};
+	});
 }) satisfies PageServerLoad;
