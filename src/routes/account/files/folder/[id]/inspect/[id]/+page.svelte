@@ -45,15 +45,15 @@ border-2 border-neutral-800"
 			</h2>
 			{#if data.file.size > BigInt(1000 ** 3)}
 				<h2 class="text-lg text-neutral-700 dark:text-neutral-300">
-					Size: {parseFloat(data.file.size) / 1000.0 ** 3} GB
+					Size: {parseFloat(data.file.size.toString()) / 1000.0 ** 3} GB
 				</h2>
 			{:else if data.file.size > BigInt(1000 ** 2)}
 				<h2 class="text-lg text-neutral-700 dark:text-neutral-300">
-					Size: {parseFloat(data.file.size) / 1000.0 ** 2} MB
+					Size: {parseFloat(data.file.size.toString()) / 1000.0 ** 2} MB
 				</h2>
 			{:else}
 				<h2 class="text-lg text-neutral-700 dark:text-neutral-300">
-					Size: {parseFloat(data.file.size) / 1000.0} kB
+					Size: {parseFloat(data.file.size.toString()) / 1000.0} kB
 				</h2>
 			{/if}
 

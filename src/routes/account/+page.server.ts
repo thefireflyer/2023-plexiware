@@ -1,13 +1,15 @@
 import type { PrismaClient, Session } from '@prisma/client';
 import db from '../../lib/db/db';
 import type { PageServerLoad } from './$types';
-import { withSession, createUserSession } from '$lib/api/user';
-
+import { withSession, createUserSession, logout } from '$lib/api/user';
 import bcrypt from 'bcrypt';
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
+import { slog } from '$lib/utils';
+import { SALT_ROUNDS } from '$lib/db/user';
+import { getRequestEvent } from '$app/server';
 
 export const load = (async ({ cookies }) => {
-	const result = await withSession(cookies, async (session: Session) => {
+	return await withSession(cookies, async (session: Session) => {
 		const user = await db.user.findUnique({
 			where: {
 				id: session.userId
@@ -18,16 +20,20 @@ export const load = (async ({ cookies }) => {
 			}
 		});
 
-		return json({
-			currentTheme: session.themeId,
-			sessionid: session.id,
-			address: user?.address,
-			email: user?.email,
-			name: user?.name,
-			sessions: user?.sessions,
-			themes: user?.themes,
-			profilePicture: user?.profilePictureId
-		});
+		if (user) {
+			return {
+				currentTheme: session.themeId,
+				sessionid: session.id,
+				address: user.address,
+				email: user.email,
+				name: user.name,
+				sessions: user.sessions,
+				themes: user.themes,
+				profilePicture: user.profilePictureId
+			};
+		} else {
+			error(500, 'src/routes/account/+page.server.ts: user should never be undefined.');
+		}
 	});
 }) satisfies PageServerLoad;
 
@@ -45,24 +51,24 @@ export const actions = {
 				}
 			});
 
+			slog('src/routes/account/+page.server.ts', 'actions/login', 'user', user);
 			if (user && (await bcrypt.compare(password, user.passwordHash))) {
-				console.log(user);
 				return createUserSession(data, request, cookies, user, db);
 			} else {
-				console.log('invalid cred');
+				slog('src/routes/account/+page.server.ts', 'actions/login', 'invalid cred');
 				return {
 					success: false
 				};
 			}
 		} else {
-			console.log('invalid login');
+			slog('src/routes/account/+page.server.ts', 'actions/login', 'invalid login');
 			return {
 				success: false
 			};
 		}
 	},
 	register: async ({ cookies, request }) => {
-		console.log('register!!');
+		slog('src/routes/account/+page.server.ts', 'actions/register', 'attempting new registration');
 
 		const data = await request.formData();
 
@@ -73,7 +79,7 @@ export const actions = {
 		const password = data.get('password') as string | null;
 
 		if (address && email && password) {
-			const passwordHash = await bcrypt.hash(password, 10);
+			const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
 			const user = await db.user.create({
 				data: {
@@ -134,9 +140,7 @@ export const actions = {
 				}
 			});
 
-			cookies.delete('sessionid', { path: '/' });
-			cookies.delete('sessionauth', { path: '/' });
-
+			logout(cookies);
 			return {};
 		});
 	},
@@ -148,9 +152,7 @@ export const actions = {
 				}
 			});
 
-			cookies.delete('sessionid', { path: '/' });
-			cookies.delete('sessionauth', { path: '/' });
-
+			logout(cookies);
 			return {};
 		});
 	},
@@ -166,8 +168,7 @@ export const actions = {
 			});
 
 			if (sessionid == session.id) {
-				cookies.delete('sessionid', { path: '/' });
-				cookies.delete('sessionauth', { path: '/' });
+				logout(cookies);
 			}
 
 			return {};

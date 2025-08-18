@@ -32,18 +32,22 @@
 	];
 
 	$: currentTaskProgression = () => {
-		const start = new Date(data.nextOrCurrentEvent.start);
-		const end = new Date(data.nextOrCurrentEvent.end);
-		const output_end = 100;
-		const output_start = 0;
-		const input_end = end.getTime();
-		const input_start = start.getTime();
-		const input = time.getTime();
-		const progression =
-			output_start +
-			((output_end - output_start) / (input_end - input_start)) * (input - input_start);
-		console.log(progression);
-		return progression;
+		if (data.nextOrCurrentEvent) {
+			const start = new Date(data.nextOrCurrentEvent.start);
+			const end = new Date(data.nextOrCurrentEvent.end);
+			const output_end = 100;
+			const output_start = 0;
+			const input_end = end.getTime();
+			const input_start = start.getTime();
+			const input = time.getTime();
+			const progression =
+				output_start +
+				((output_end - output_start) / (input_end - input_start)) * (input - input_start);
+			console.log(progression);
+			return progression;
+		} else {
+			return 0;
+		}
 	};
 </script>
 

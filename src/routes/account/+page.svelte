@@ -1,8 +1,9 @@
 <script lang="ts">
+	import { slog } from '$lib/utils';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	console.log(data);
+	slog('src/routes/account/+page.svelte', 'loading', data);
 </script>
 
 <div
@@ -80,7 +81,7 @@ flex flex-col gap-3 overflow-y-scroll maincontainer"
 		{#each data.themes as theme}
 			<div class="flex gap-1 items-center">
 				<div>{theme.id} - {theme.name}</div>
-				{#if theme.id == data.currentTheme?.id}
+				{#if theme.id == data.currentTheme}
 					<div>(current)</div>
 				{/if}
 				<form method="POST" action="?/deletetheme">

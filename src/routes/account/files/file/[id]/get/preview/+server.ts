@@ -19,5 +19,5 @@ export const GET: RequestHandler = async ({ params, cookies }) => {
 		}
 	});
 
-	return json(result);
+	return new Response(result);
 };

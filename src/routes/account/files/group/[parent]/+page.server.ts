@@ -1,7 +1,7 @@
 import { withSession } from '$lib/api/user';
 import type { PrismaClient, Session } from '@prisma/client';
 import type { PageServerLoad } from './$types';
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import db from '$lib/db/db';
 
 export const load = (async ({ params, request, cookies }) => {
@@ -17,9 +17,13 @@ export const load = (async ({ params, request, cookies }) => {
 
 		console.log(parent);
 
-		return {
-			sessionid: session.id,
-			parent
-		};
+		if (parent) {
+			return {
+				sessionid: session.id,
+				parent
+			};
+		} else {
+			error(404, 'parent group not found');
+		}
 	});
 }) satisfies PageServerLoad;

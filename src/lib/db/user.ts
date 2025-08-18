@@ -6,7 +6,7 @@ import { Left, Right, type Either } from '../utils';
 
 ////////////////////////////////////////////////////////////////////////////////
 
-const SALT_ROUNDS = 10;
+export const SALT_ROUNDS = 10;
 export const AUTH_TOKEN = 'test';
 export const APP_NAME = 'Plexiware';
 

@@ -1,24 +1,22 @@
 <script lang="ts">
 	import type { LayoutData } from './$types';
 	import { page } from '$app/stores';
-
-	export let data: LayoutData;
-
 	import { quintInOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
 	import Transition from '$lib/components/transition.svelte';
 	import { navigating } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import { slog } from '$lib/utils';
+
+	export let data: LayoutData;
+	// slog('src/routes/account/+layout.svelte', 'loading', data);
 
 	let menuOpen = false;
-
-	console.log(data);
-
 	let searchQuery = data.url.searchParams.get('q') ?? '';
 
 	navigating.subscribe((nav) => {
 		// console.log(data.url)
-		console.log('navigating to:', data.url.searchParams);
+		slog('src/routes/account/+layout.svelte', 'navigating to', data.url.searchParams);
 	});
 
 	let os = 'unknown';

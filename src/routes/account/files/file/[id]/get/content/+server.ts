@@ -16,5 +16,5 @@ export const GET: RequestHandler = async ({ params, cookies }) => {
 		return file?.content;
 	});
 
-	return json(result);
+	return new Response(result);
 };

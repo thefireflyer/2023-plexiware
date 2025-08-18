@@ -98,15 +98,15 @@ flex justify-center items-center w-32 h-24"
 		</h2>
 		{#if data.folder.size > BigInt(1000 ** 3)}
 			<h2 class="text-lg text-neutral-700 dark:text-neutral-300">
-				Size: {parseFloat(data.folder.size) / 1000.0 ** 3} GB
+				Size: {parseFloat(data.folder.size.toString()) / 1000.0 ** 3} GB
 			</h2>
 		{:else if data.folder.size > BigInt(1000 ** 2)}
 			<h2 class="text-lg text-neutral-700 dark:text-neutral-300">
-				Size: {parseFloat(data.folder.size) / 1000.0 ** 2} MB
+				Size: {parseFloat(data.folder.size.toString()) / 1000.0 ** 2} MB
 			</h2>
 		{:else}
 			<h2 class="text-lg text-neutral-700 dark:text-neutral-300">
-				Size: {parseFloat(data.folder.size) / 1000.0} kB
+				Size: {parseFloat(data.folder.size.toString()) / 1000.0} kB
 			</h2>
 		{/if}
 		<form

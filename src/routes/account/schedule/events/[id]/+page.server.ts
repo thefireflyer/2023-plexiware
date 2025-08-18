@@ -1,7 +1,7 @@
 import { withSession } from '$lib/api/user';
 import type { PrismaClient, Session } from '@prisma/client';
 import type { PageServerLoad } from './$types';
-import { redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import db from '$lib/db/db';
 
 export const load = (async ({ params, request, cookies }) => {
@@ -15,12 +15,14 @@ export const load = (async ({ params, request, cookies }) => {
 			}
 		});
 
-		console.log(event);
-
-		return {
-			sessionid: session.id,
-			event
-		};
+		if (event) {
+			return {
+				sessionid: session.id,
+				event
+			};
+		} else {
+			error(404, 'event not found');
+		}
 	});
 }) satisfies PageServerLoad;
 

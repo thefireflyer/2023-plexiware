@@ -3,7 +3,8 @@ import type { PrismaClient, Session } from '@prisma/client';
 import type { LayoutServerLoad } from './$types';
 import db from '$lib/db/db';
 import { json } from '@sveltejs/kit';
-import { id } from '$lib/utils';
+import { id, slog } from '$lib/utils';
+import { getRequestEvent } from '$app/server';
 
 export const load = (async ({ url, cookies }) => {
 	return await withSession(cookies, async (session: Session) => {
