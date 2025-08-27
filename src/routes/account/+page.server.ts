@@ -79,20 +79,33 @@ export const actions = {
 		const password = data.get('password') as string | null;
 
 		if (address && email && password) {
-			const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
-
-			const user = await db.user.create({
-				data: {
-					address,
-					name,
-					email,
-					passwordHash
+			const existingUser = await db.user.findFirst({
+				where: {
+					OR: [{ email }, { address }]
 				}
 			});
+			if (existingUser) {
+				slog('src/routes/account/+page.server.ts', 'register', 'existing user:', existingUser);
 
-			console.log(user);
+				return {
+					success: false
+				};
+			} else {
+				const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
-			return createUserSession(data, request, cookies, user, db);
+				const user = await db.user.create({
+					data: {
+						address,
+						name,
+						email,
+						passwordHash
+					}
+				});
+
+				slog('src/routes/account/+page.server.ts', 'register', 'new user:', user);
+
+				return createUserSession(data, request, cookies, user, db);
+			}
 		} else {
 			return {
 				success: false
