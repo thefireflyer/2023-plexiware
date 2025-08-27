@@ -1,11 +1,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 
+import { slog } from '$lib/utils';
 import type { LayoutServerLoad } from './$types';
 
 ///////////////////////////////////////////////////////////////////////////////
 
 /*
 Example config url
+
+http://localhost:5173/w/(%20h%20(%20note%200%20)%20(%20v%20(%20note%200%20)%20(%20note%201%20)%20)%20)
 
 /( 
     h 
@@ -60,15 +63,15 @@ Example config url
 
 export const load = (async ({ params, request }) => {
 	console.log(params);
+	if (params.path === '') {
+		params.path = '(h (note 0) (v (note 1) (note 2)))';
+	}
 
-	var state = parse(tokenize(params.path));
+	let src = parse(tokenize(params.path));
+	explore(src, 0);
 
-	console.log(explore(state, 0));
-
-	var state = state?.flatten();
-	var events: number[] = [];
-
-	// console.log(state)
+	let state = src?.flatten();
+	let events: number[] = [];
 
 	return {
 		state,
@@ -78,11 +81,39 @@ export const load = (async ({ params, request }) => {
 
 ///////////////////////////////////////////////////////////////////////////////
 
+/*
+S0 = S1
+	 | S0 ' ' S1
+S1 = '(' S0 ')'
+	 | Idn0
+	 | Num0
+	 | Str0
+Idn0 = ([a-Z] | '_' | ':') (!('.' | ' '))*
+Num0 = [0-9]+
+	   | [0-9]* '.' [0-9]+
+Str0 = '"' Str1
+Str1 = !('\' | '"') Str1
+		 | '\"' Str1
+		 | '"'
+*/
+
+type ST = 'horz' | 'vert' | 'note';
+type SE = { t:'app', x: ST; ts: SE[] }
+				| S1
+type S1 = { t:'idn', x: string }
+				| { t:'num', x: number }
+				| { t:'str', x: string };
+
+const parseSE = (src: string) => {};
+
+///////////////////////////////////////////////////////////////////////////////
+
 type Cursor = Node | undefined;
 type NodeType = string | null;
 
 ///////////////////////////////////////////////////////////////////////////////
 
+type NodeFlt = {type: NodeType, children: NodeFlt[]}
 class Node {
 	parent: Cursor;
 	type: NodeType;
@@ -94,7 +125,7 @@ class Node {
 		this.children = [];
 	}
 
-	flatten() {
+	flatten(): NodeFlt {
 		return {
 			type: this.type,
 			children: this.children.map((node) => node.flatten())
@@ -111,16 +142,18 @@ const tokenize = (val: String) => {
 
 	while (i < val.length) {
 		if (val[i] === '(') {
-			res.push('(');
-			i++;
-		} else if (val[i] === ')') {
-			res.push(')');
-			i++;
-		} else if (val[i] !== ' ') {
-			running += val[i];
-		} else {
 			res.push(running);
 			running = '';
+			res.push('(');
+		} else if (val[i] === ')') {
+			res.push(running);
+			running = '';
+			res.push(')');
+		} else if (val[i] === ' ') {
+			res.push(running);
+			running = '';
+		} else {
+			running += val[i];
 		}
 
 		i++;
@@ -137,7 +170,7 @@ const parse = (tokens: string[]) => {
 
 	let i = 0;
 
-	let current: Cursor = undefined;
+	let current = undefined as Cursor;
 
 	while (i < tokens.length) {
 		if (tokens[i] === '(') {

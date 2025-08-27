@@ -84,7 +84,7 @@ Journal                                                              1 Jan 2024
 
 	///////////////////////////////////////////////////////////////////////////
 
-	let title = 'ID ' + inner.children[1].type;
+	let title = 'ID ' + inner.children[1]?.type;
 	let html = `
 	<p>
 		<b>Abstract.</b> There are tests to be done on non-negative numbers for
