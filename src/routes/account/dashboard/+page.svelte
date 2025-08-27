@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { slog } from '$lib/utils';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-
-	console.log(data);
+	slog('src/routes/account/dashboard/+page.svelte', 'data', data);
 
 	import { onMount } from 'svelte';
 
@@ -43,7 +43,8 @@
 			const progression =
 				output_start +
 				((output_end - output_start) / (input_end - input_start)) * (input - input_start);
-			console.log(progression);
+			// slog('src/routes/account/dashboard/+page.svelte', 'current task progression', progression);
+
 			return progression;
 		} else {
 			return 0;

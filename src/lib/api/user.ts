@@ -13,7 +13,7 @@ export type Query<T> = (session: Session) => Promise<T>;
 export const withSession = async <T>(cookies: Cookies, query: Query<T>) => {
 	const { locals } = getRequestEvent();
 	const session = locals.session;
-	slog('src/lib/api/user.ts', 'withSession', session);
+	// slog('src/lib/api/user.ts', 'withSession', session);
 	if (session) {
 		return await query(session);
 	} else {

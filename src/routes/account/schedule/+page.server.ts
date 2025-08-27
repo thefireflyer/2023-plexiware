@@ -2,6 +2,7 @@ import { withSession } from '$lib/api/user';
 import type { PrismaClient, Session } from '@prisma/client';
 import type { PageServerLoad } from './$types';
 import db from '$lib/db/db';
+import { slog } from '$lib/utils';
 
 export const load = (async ({ request, cookies }) => {
 	return await withSession(cookies, async (session: Session) => {
@@ -26,7 +27,7 @@ export const load = (async ({ request, cookies }) => {
 			}
 		});
 
-		console.log(events);
+		// slog('src/routes/account/schedule/+page.server.ts', 'load', events);
 
 		return {
 			sessionid: session.id,
@@ -63,7 +64,7 @@ export const actions = {
 					}
 				});
 
-				console.log(event);
+				slog('src/routes/account/schedule/+page.server.ts', 'update', event);
 
 				return {
 					sessionid: session.id,
@@ -71,7 +72,7 @@ export const actions = {
 				};
 			});
 		} else {
-			console.log('invalid form event create');
+			slog('src/routes/account/schedule/+page.server.ts', 'load', 'invalid form event create');
 		}
 	},
 	delete: async ({ request, cookies }) => {
@@ -87,12 +88,12 @@ export const actions = {
 					}
 				});
 
-				console.log(event);
+				slog('src/routes/account/schedule/+page.server.ts', 'delete', event);
 
 				return { success: true };
 			});
 		} else {
-			console.log('invalid input');
+			slog('src/routes/account/schedule/+page.server.ts', 'delete', 'invalid input');
 		}
 	},
 	create: async ({ request, cookies }) => {
@@ -119,12 +120,12 @@ export const actions = {
 					}
 				});
 
-				console.log(event);
+				slog('src/routes/account/schedule/+page.server.ts', 'create', event);
 
 				return { success: true };
 			});
 		} else {
-			console.log('invalid form event create');
+			slog('src/routes/account/schedule/+page.server.ts', 'create', 'invalid form event create');
 		}
 	}
 };

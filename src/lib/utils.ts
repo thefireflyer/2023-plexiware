@@ -2,7 +2,7 @@
 
 export const slog = (file: string, caller: string, m?: any, ...ps: any[]) => {
 	const date = new Date();
-	console.log('\x1B[2m%s %s::%s:\x1B[0m', date.toLocaleTimeString(), file, caller, m, ...ps);
+	console.log('\x1B[2m%s %s ::: %s:\x1B[0m', date.toLocaleTimeString(), file, caller, m, ...ps);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

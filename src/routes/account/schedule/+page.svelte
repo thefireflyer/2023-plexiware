@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { slog } from '$lib/utils';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -159,7 +160,7 @@
 	let rightNowLineRef: HTMLDivElement;
 
 	onMount(() => {
-		console.log(data);
+		// slog('src/routes/account/schedule/+page.svelte', 'on mount', data);
 		const delay = setTimeout(() => {
 			clearTimeout(delay);
 			rightNowLineRef.scrollIntoView();

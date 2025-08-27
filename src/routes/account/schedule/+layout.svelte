@@ -2,6 +2,7 @@
 	import Transition from '$lib/components/transition.svelte';
 
 	import { navigating } from '$app/stores';
+	import { slog } from '$lib/utils';
 
 	let pageUrl = '';
 
@@ -9,8 +10,7 @@
 
 	navigating.subscribe((nav) => {
 		if (nav) {
-			console.log(nav);
-			console.log(nav.to?.url.pathname);
+			// slog('src/routes/account/schedule/+layout.svelte', 'on navigation', nav);
 			if (nav.to) {
 				pageUrl = nav.to.url.pathname.split('/')[3];
 
