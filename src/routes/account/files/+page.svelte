@@ -8,7 +8,7 @@
 	//////////////////////////////////////////////////////////////////////////////
 
 	type View = 'grid' | 'table' | 'tree';
-	let view = $state('table') as View;
+	let view = $state('grid') as View;
 	const isview = $derived((v: View) => {
 		return v === view;
 	});
@@ -22,11 +22,11 @@
 
 	const sizeToString = (s: bigint) => {
 		if (s > BigInt(1000 ** 3)) {
-			return 'Size: ' + parseFloat(s.toString()) / 1000.0 ** 3 + ' GB';
+			return parseFloat(s.toString()) / 1000.0 ** 3 + ' GB';
 		} else if (s > BigInt(1000 ** 2)) {
-			return 'Size: ' + parseFloat(s.toString()) / 1000.0 ** 2 + ' MB';
+			return parseFloat(s.toString()) / 1000.0 ** 2 + ' MB';
 		} else {
-			return 'Size: ' + parseFloat(s.toString()) / 1000.0 + ' kB';
+			return parseFloat(s.toString()) / 1000.0 + ' kB';
 		}
 	};
 
