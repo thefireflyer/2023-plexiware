@@ -25,6 +25,8 @@ export const load = (async ({ cookies }) => {
 			select: {
 				id: true,
 				name: true,
+				dateCreated: true,
+				dateLastModified: true,
 				dateLastAccessed: true,
 				size: true,
 				fileType: true
