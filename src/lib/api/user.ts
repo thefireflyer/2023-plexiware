@@ -34,11 +34,15 @@ export const createUserSession = async (
 	const session = await newSession(deviceOS, user);
 
 	cookies.set('sessionid', session.id.toString(), {
-		secure: false,
+		secure: true,
+		httpOnly: true,
+		sameSite: true,
 		path: '/'
 	});
 	cookies.set('sessionauth', AUTH_TOKEN, {
-		secure: false,
+		secure: true,
+		httpOnly: true,
+		sameSite: true,
 		path: '/'
 	});
 

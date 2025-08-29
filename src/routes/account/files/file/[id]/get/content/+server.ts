@@ -2,7 +2,7 @@ import { withSession } from '$lib/api/user';
 import type { PrismaClient, Session } from '@prisma/client';
 import type { RequestHandler } from './$types';
 import db from '$lib/db/db';
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ params, cookies }) => {
 	const id = parseInt(params.id);
@@ -13,8 +13,9 @@ export const GET: RequestHandler = async ({ params, cookies }) => {
 			}
 		});
 
-		return file?.content;
+		return file ? file.content : error(404)
 	});
-
-	return new Response(result);
+	
+	// hacky, but seems to work...
+	return new Response(result as any);	
 };
