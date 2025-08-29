@@ -1,5 +1,6 @@
 .DS_Store
-/prisma/dev.db
+prisma/dev.db
+prisma/migrations
 node_modules
 /build
 /.svelte-kit
@@ -9,4 +10,3 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-prisma/dev.db
