@@ -11,7 +11,7 @@
 		"migrate": "npx prisma migrate dev",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && jest",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch && jest",
-		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"lint": "prettier --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"clean": "rm -r node_modules; rm -r .svelte-kit"
 	},

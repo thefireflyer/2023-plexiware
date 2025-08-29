@@ -15,10 +15,13 @@
 
 **Dependencies:**
 - npm
+- prisma
 
 **Development:**
-- `npm run setup`
-- `npm run dev`
+- **Setup:** `npm run setup`
+- **Watch & Host:** `npm run dev`
+- **Test:** `npm run check`
+- **Lint:** `npm run lint`
 
 **Deployment:**
 - ...
