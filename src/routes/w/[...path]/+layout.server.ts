@@ -67,11 +67,11 @@ export const load = (async ({ params, request }) => {
 		params.path = '(h (note 0) (v (note 1) (note 2)))';
 	}
 
-	let src = parse(tokenize(params.path));
+	const src = parse(tokenize(params.path));
 	explore(src, 0);
 
-	let state = src?.flatten();
-	let events: number[] = [];
+	const state = src?.flatten();
+	const events: number[] = [];
 
 	return {
 		state,
@@ -98,11 +98,8 @@ Str1 = !('\' | '"') Str1
 */
 
 type ST = 'horz' | 'vert' | 'note';
-type SE = { t:'app', x: ST; ts: SE[] }
-				| S1
-type S1 = { t:'idn', x: string }
-				| { t:'num', x: number }
-				| { t:'str', x: string };
+type SE = { t: 'app'; x: ST; ts: SE[] } | S1;
+type S1 = { t: 'idn'; x: string } | { t: 'num'; x: number } | { t: 'str'; x: string };
 
 const parseSE = (src: string) => {};
 
@@ -113,7 +110,7 @@ type NodeType = string | null;
 
 ///////////////////////////////////////////////////////////////////////////////
 
-type NodeFlt = {type: NodeType, children: NodeFlt[]}
+type NodeFlt = { type: NodeType; children: NodeFlt[] };
 class Node {
 	parent: Cursor;
 	type: NodeType;
@@ -135,8 +132,8 @@ class Node {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-const tokenize = (val: String) => {
-	let res = [];
+const tokenize = (val: string) => {
+	const res = [];
 	let i = 0;
 	let running = '';
 
@@ -174,17 +171,17 @@ const parse = (tokens: string[]) => {
 
 	while (i < tokens.length) {
 		if (tokens[i] === '(') {
-			let n: Node = new Node(current, null);
+			const n: Node = new Node(current, null);
 			current?.children.push(n);
 			current = n;
 		} else if (tokens[i] === ')') {
 			current = current?.parent;
 		} else if (tokens[i].match(/^[0-9]+$/)) {
-			let n: Node = new Node(current, tokens[i]);
+			const n: Node = new Node(current, tokens[i]);
 			current?.children.push(n);
 			// current = n
 		} else if (tokens[i].match(/^[0-9a-z]+$/)) {
-			let n: Node = new Node(current, tokens[i]);
+			const n: Node = new Node(current, tokens[i]);
 			current?.children.push(n);
 			// current = n
 		}

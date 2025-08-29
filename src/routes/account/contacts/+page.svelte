@@ -5,9 +5,7 @@
 	console.log(data);
 </script>
 
-
 <div
 	class="grow p-4 pt-3
 flex flex-col gap-3"
->
-</div>
+></div>

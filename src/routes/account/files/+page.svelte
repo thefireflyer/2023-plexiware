@@ -40,8 +40,8 @@
 
 	//////////////////////////////////////////////////////////////////////////////
 
-	let pfolders = $state(data.folders)
-	let pfiles = $state(data.files)
+	let pfolders = $state(data.folders);
+	let pfiles = $state(data.files);
 
 	let sortfolders = () => {
 		pfolders.sort((a, b) => {
@@ -102,7 +102,6 @@
 	);
 
 	//////////////////////////////////////////////////////////////////////////////
-
 </script>
 
 {#snippet button(icon: string, active: boolean, onclick: () => void)}

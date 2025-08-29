@@ -13,7 +13,7 @@
 	///////////////////////////////////////////////////////////////////////////
 
 	class Note {
-		title!: String;
+		title!: string;
 
 		nodes!: Node[];
 
@@ -25,7 +25,7 @@
 		type!: NodeType;
 
 		children!: Node[];
-		collapsed!: Boolean;
+		collapsed!: boolean;
 	}
 
 	enum NodeType {}

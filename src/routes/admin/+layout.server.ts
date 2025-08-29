@@ -59,7 +59,7 @@ export const load = (async ({ url }) => {
 		}
 	});
 
-	let results: { name: string; slug: string; icon: string }[] = [];
+	const results: { name: string; slug: string; icon: string }[] = [];
 	return {
 		searchResults: results
 			.concat(

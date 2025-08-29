@@ -66,8 +66,8 @@
 				name: 'Connections',
 				icon: 'app_registration'
 			}
-        ],
-        [
+		],
+		[
 			{
 				url: '/sessions',
 				name: 'Admin Sessions',

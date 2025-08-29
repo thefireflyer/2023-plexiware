@@ -1,10 +1,10 @@
 import { withSession } from '$lib/api/user';
-import type { PrismaClient, Session } from '@prisma/client';
+import type { Session } from '@prisma/client';
 import type { PageServerLoad } from './$types';
-import { error, redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import db from '$lib/db/db';
 
-export const load = (async ({ params, request, cookies }) => {
+export const load = (async ({ params, cookies }) => {
 	const id = parseInt(params.id);
 	console.log(id);
 
@@ -27,7 +27,7 @@ export const load = (async ({ params, request, cookies }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-	update: async ({ params, request, cookies }) => {
+	update: async ({ request, cookies }) => {
 		const data = await request.formData();
 
 		const id = data.get('id') as string;

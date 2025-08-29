@@ -109,7 +109,7 @@ export const load = (async ({ url, cookies }) => {
 				}
 			});
 
-			let results = [];
+			const results = [];
 
 			if (query.includes('event') || query.includes('schedule')) {
 				results.push({

@@ -1,13 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{html,js,svelte,ts}'],
-  theme: {
-    extend: {},
-  },
-  plugins: [
-    require('@catppuccin/tailwindcss')({
-      prefix: "ctp",
-
-    }),
-  ],
-}
+	content: ['./src/**/*.{html,js,svelte,ts}'],
+	theme: {
+		extend: {}
+	},
+	plugins: [
+		require('@catppuccin/tailwindcss')({
+			prefix: 'ctp'
+		})
+	]
+};

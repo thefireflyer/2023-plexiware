@@ -13,9 +13,9 @@ export const GET: RequestHandler = async ({ params, cookies }) => {
 			}
 		});
 
-		return file ? file.content : error(404)
+		return file ? file.content : error(404);
 	});
-	
+
 	// hacky, but seems to work...
-	return new Response(result as any);	
+	return new Response(result as any);
 };

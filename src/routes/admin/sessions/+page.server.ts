@@ -31,8 +31,8 @@ export const actions = {
 		}
 	},
 	logout: async ({ cookies }) => {
-        const sessionid = parseInt(cookies.get('admin-session') ?? '')
-        await db.adminSession.delete({
+		const sessionid = parseInt(cookies.get('admin-session') ?? '');
+		await db.adminSession.delete({
 			where: {
 				id: sessionid
 			}

@@ -1,9 +1,8 @@
 import { withSession } from '$lib/api/user';
-import type { PrismaClient, Session } from '@prisma/client';
+import type { Session } from '@prisma/client';
 import type { PageServerLoad } from './$types';
-import { redirect } from '@sveltejs/kit';
 
-export const load = (async ({ request, cookies }) => {
+export const load = (async ({ cookies }) => {
 	return await withSession(cookies, async (session: Session) => {
 		return {
 			sessionid: session.id

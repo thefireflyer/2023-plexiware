@@ -12,7 +12,7 @@ export const GET: RequestHandler = async ({ params, cookies }) => {
 				id
 			}
 		});
-		
+
 		return file ? (file.preview ?? file.content) : error(404);
 	});
 

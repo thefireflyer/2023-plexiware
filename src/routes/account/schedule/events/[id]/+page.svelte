@@ -3,7 +3,7 @@
 
 	export let data: PageData;
 
-	function eventDates(event: any) {
+	function eventDates(event: string | number | Date) {
 		console.log(event);
 		const date = new Date(event);
 		const dateTimeLocalValue = new Date(date.getTime() - date.getTimezoneOffset() * 60000)

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { slog } from '$lib/utils';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -319,7 +318,7 @@ overflow-y-scroll"
         gap-3"
 			></div>
 			{#each hours as hour}
-				{#each hour as segment}
+				{#each hour as _segment}
 					<div
 						class="
                 grow

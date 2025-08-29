@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
-let demo = `
+const demo = `
 
 -------------------------------------------------------------------------------
 -- ///////////////////////////////////////////////////////////////////////// --
@@ -53,30 +53,28 @@ Journal                                                              1 Jan 2024
 ///////////////////////////////////////////////////////////////////////////////
 
 class FNode {
-    dateCreated: Date;
-    dateLastModified: Date;
-    dateLastViewed: Date;
+	dateCreated: Date;
+	dateLastModified: Date;
+	dateLastViewed: Date;
 
-    constructor(created: Date, modified: Date, viewed: Date) {
-        this.dateCreated = created
-        this.dateLastModified = modified
-        this.dateLastViewed = viewed
-    }
+	constructor(created: Date, modified: Date, viewed: Date) {
+		this.dateCreated = created;
+		this.dateLastModified = modified;
+		this.dateLastViewed = viewed;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
 class Journal {
-    entries!: Map<Date, JournalEntry>;
+	entries!: Map<Date, JournalEntry>;
 }
 
 class JournalEntry extends FNode {
-    morningTasks!: Map<Task, Boolean>;
-    afternoonTasks!: Map<Task, Boolean>;
+	morningTasks!: Map<Task, boolean>;
+	afternoonTasks!: Map<Task, boolean>;
 }
 
-class Task {
-
-}
+class Task {}
 
 ///////////////////////////////////////////////////////////////////////////////

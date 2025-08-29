@@ -1,16 +1,15 @@
-import type { PageServerLoad } from './$types';
 import { ADMIN_KEY } from '$env/static/private';
 import { slog } from '$lib/utils';
 import db from '$lib/db/db';
 import { randomInt } from 'node:crypto';
 import { redirect } from '@sveltejs/kit';
 
-export const load = ({cookies}) => {
-    const session = cookies.get('admin-session');
-    if (session) {
-        redirect(303, '/admin')
-    }
-}
+export const load = ({ cookies }) => {
+	const session = cookies.get('admin-session');
+	if (session) {
+		redirect(303, '/admin');
+	}
+};
 
 export const actions = {
 	default: async ({ cookies, request }) => {
@@ -39,7 +38,7 @@ export const actions = {
 				path: '/'
 			});
 
-            redirect(303, '/admin');
+			redirect(303, '/admin');
 		}
 	}
 };
