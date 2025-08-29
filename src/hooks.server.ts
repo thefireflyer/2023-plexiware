@@ -1,5 +1,7 @@
+import db from '$lib/db/db';
 import { getSession } from '$lib/db/user';
 import { slog } from '$lib/utils';
+import { redirect } from '@sveltejs/kit';
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -30,6 +32,19 @@ export async function handle({ event, resolve }) {
 				event.locals.session = session;
 			}
 		);
+	} else if (event.url.pathname.startsWith('/admin')) {
+		const id_ = event.cookies.get('admin-session') ?? redirect(302, '/login-admin');
+		const id = parseInt(id_);
+		const session = await db.adminSession.findUnique({
+			where: {
+				id
+			}
+		});
+
+		if (session === null) {
+			event.cookies.delete('admin-session', { path: '/' });
+			redirect(302, '/login-admin');
+		}
 	}
 
 	const response = await resolve(event);

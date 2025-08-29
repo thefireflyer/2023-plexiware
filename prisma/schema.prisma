@@ -8,6 +8,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model AdminSession {
+  id             BigInt   @id
+  expirationDate DateTime
+}
+
 model User {
   id               Int       @id @default(autoincrement())
   address          String    @unique

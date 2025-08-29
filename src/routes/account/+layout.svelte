@@ -76,7 +76,7 @@
 			icon: 'code'
 		},
 		{
-			url: 'http://thefireflyer.me/homeportal/',
+			url: 'http://thefireflyer.vercel.app/',
 			name: 'Other apps',
 			icon: 'apps'
 		}
